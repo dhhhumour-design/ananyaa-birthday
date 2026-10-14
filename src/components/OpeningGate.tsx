@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, Heart } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { MediaService } from '../utils/mediaStore';
+import { ProgressiveImage } from './ProgressiveImage';
 
 interface OpeningGateProps {
   onUnlock: () => void;
@@ -49,15 +50,17 @@ export const OpeningGate: React.FC<OpeningGateProps> = ({ onUnlock, onBurstConfe
         {/* Real Portrait of Ananya with Soft Glass Frame */}
         <div className="relative mx-auto mb-6 w-24 h-24 rounded-full p-1.5 liquid-glass shadow-xl border border-white/95">
           <div className="w-full h-full rounded-full overflow-hidden bg-rose-100 shadow-inner">
-            <img
+            <ProgressiveImage
               src={photoUrl}
               alt="Ananya"
-              className="w-full h-full object-cover object-center"
-              referrerPolicy="no-referrer"
+              priority={true}
+              aspectRatio="aspect-square"
+              className="w-full h-full rounded-full"
+              imgClassName="w-full h-full object-cover object-center rounded-full"
             />
           </div>
           {/* Subtle Glowing Heart Accent */}
-          <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 text-white flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
+          <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 text-white flex items-center justify-center shadow-lg border-2 border-white animate-pulse z-10">
             <Heart className="w-4 h-4 fill-white" />
           </div>
         </div>
@@ -77,30 +80,20 @@ export const OpeningGate: React.FC<OpeningGateProps> = ({ onUnlock, onBurstConfe
           onClick={handleOpen}
           onMouseDown={() => setIsPressing(true)}
           onMouseUp={() => setIsPressing(false)}
-          onTouchStart={() => setIsPressing(true)}
-          onTouchEnd={() => setIsPressing(false)}
-          className={`group relative w-full overflow-hidden rounded-2xl px-6 py-4 font-semibold text-white shadow-xl transition-all duration-300 active:scale-95 cursor-pointer ${
-            isPressing ? 'scale-95 shadow-md' : 'hover:scale-[1.02] hover:shadow-rose-400/40 glow-rose'
+          className={`group relative w-full py-4 px-6 rounded-2xl font-serif text-lg font-medium text-white transition-all duration-300 shadow-lg cursor-pointer flex items-center justify-center gap-2 overflow-hidden ${
+            isPressing ? 'scale-95' : 'hover:scale-102 hover:shadow-xl'
           }`}
           style={{
             background: 'linear-gradient(135deg, #F43F5E 0%, #E11D48 50%, #BE123C 100%)',
           }}
         >
-          {/* Glass Highlight Bar */}
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-transparent via-white/20 to-white/35 pointer-events-none" />
+          {/* Shimmer sweep */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
-          {/* Shimmer overlay */}
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
-
-          <div className="relative flex items-center justify-center gap-2 text-base tracking-wide">
-            <span>Open Your Surprise</span>
-            <Sparkles className="w-4 h-4 text-amber-200 animate-spin" style={{ animationDuration: '4s' }} />
-          </div>
+          <Sparkles className="w-5 h-5 text-amber-200 animate-spin-slow" />
+          <span>Tap to Enter Your World</span>
+          <Heart className="w-4 h-4 text-pink-200 fill-pink-200" />
         </button>
-
-        <p className="mt-4 text-[11px] text-rose-900/60 tracking-wider uppercase font-semibold">
-          15 October • A Handcrafted Birthday Experience
-        </p>
       </div>
     </div>
   );

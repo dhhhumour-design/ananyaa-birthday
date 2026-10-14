@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { X, ChevronLeft, ChevronRight, Heart, Sparkles, Maximize2 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { MediaService, MediaItem } from '../utils/mediaStore';
+import { ProgressiveImage } from './ProgressiveImage';
 
 // Alternating polaroid rotations for organic scrapbook depth
 const ROTATIONS = [-2.5, 2.2, 2.8, -2.0, 2.4, -2.6];
@@ -119,20 +120,23 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
                 aria-hidden="true"
               />
 
-              {/* Polaroid Image Frame */}
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-rose-100/70 via-pink-50/80 to-amber-50/70 mb-3 shadow-inner flex items-center justify-center">
-                <img
+              {/* Polaroid Progressive Image Frame with Android zero-lag memory cleanup */}
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-rose-100/70 mb-3 shadow-inner">
+                <ProgressiveImage
                   src={item.url || `/ananya_real_${index + 1}.jpg`}
                   alt={item.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
+                  aspectRatio="aspect-[4/5]"
+                  placeholderBg={item.placeholderBg}
+                  className="w-full h-full"
+                  imgClassName="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  memorySafe={true}
                 />
 
                 {/* Floating Heart Reaction Button */}
                 <button
                   onClick={(e) => toggleHeart(item.id, e)}
                   aria-label="Heart this memory"
-                  className="absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md transition-transform active:scale-90 hover:scale-110 z-10"
+                  className="absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md transition-transform active:scale-90 hover:scale-110 z-10 cursor-pointer"
                 >
                   <Heart
                     className={`w-4 h-4 transition-colors ${
@@ -142,13 +146,13 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
                 </button>
 
                 {/* Tap to expand hint */}
-                <div className="absolute bottom-2.5 right-2.5 px-2 py-1 rounded-lg bg-black/45 backdrop-blur-md text-[10px] text-white flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute bottom-2.5 right-2.5 px-2 py-1 rounded-lg bg-black/45 backdrop-blur-md text-[10px] text-white flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   <Maximize2 className="w-2.5 h-2.5" />
                   <span>Expand</span>
                 </div>
 
                 {/* Tag Badge */}
-                <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-semibold text-rose-900 shadow-sm">
+                <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-semibold text-rose-900 shadow-sm pointer-events-none">
                   {item.tag}
                 </div>
               </div>
@@ -194,25 +198,27 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
             <button
               onClick={handleClose}
               aria-label="Close photo viewer"
-              className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-950 shadow-md hover:bg-white active:scale-90 transition-transform z-30"
+              className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-950 shadow-md hover:bg-white active:scale-90 transition-transform z-30 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Active Photo Container */}
+            {/* Active Photo Container with ProgressiveImage */}
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-rose-100 mb-4 shadow-inner">
-              <img
+              <ProgressiveImage
                 src={photos[selectedIndex].url || `/ananya_real_${selectedIndex + 1}.jpg`}
                 alt={photos[selectedIndex].title}
-                className="w-full h-full object-cover object-center"
-                referrerPolicy="no-referrer"
+                aspectRatio="aspect-[3/4]"
+                priority={true}
+                className="w-full h-full"
+                imgClassName="w-full h-full object-cover object-center"
               />
 
               {/* Navigation Arrows */}
               <button
                 onClick={handlePrev}
                 aria-label="Previous photo"
-                className="absolute left-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 backdrop-blur-md flex items-center justify-center text-rose-950 shadow-md hover:bg-white active:scale-90 transition-transform"
+                className="absolute left-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 backdrop-blur-md flex items-center justify-center text-rose-950 shadow-md hover:bg-white active:scale-90 transition-transform cursor-pointer z-20"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -220,13 +226,13 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
               <button
                 onClick={handleNext}
                 aria-label="Next photo"
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 backdrop-blur-md flex items-center justify-center text-rose-950 shadow-md hover:bg-white active:scale-90 transition-transform"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 backdrop-blur-md flex items-center justify-center text-rose-950 shadow-md hover:bg-white active:scale-90 transition-transform cursor-pointer z-20"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
 
               {/* Sparkle Badge */}
-              <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-rose-900/60 backdrop-blur-md text-white text-xs font-medium flex items-center gap-1.5">
+              <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-rose-900/60 backdrop-blur-md text-white text-xs font-medium flex items-center gap-1.5 z-20">
                 <Sparkles className="w-3 h-3 text-amber-300" />
                 <span>
                   {selectedIndex + 1} of {photos.length}
@@ -249,7 +255,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
               {/* Heart Action Bar */}
               <button
                 onClick={(e) => toggleHeart(photos[selectedIndex].id, e)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full liquid-pill hover:scale-105 active:scale-95 transition-transform shadow-md text-xs font-semibold text-rose-900"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full liquid-pill hover:scale-105 active:scale-95 transition-transform shadow-md text-xs font-semibold text-rose-900 cursor-pointer"
               >
                 <Heart
                   className={`w-4 h-4 ${

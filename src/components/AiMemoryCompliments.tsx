@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Heart, RefreshCw, Wand2 } from 'lucide-react';
 import { sound } from '../utils/audio';
+import { ProgressiveImage } from './ProgressiveImage';
 
 interface AiMemoryComplimentsProps {
   onBurstConfetti: (x?: number, y?: number) => void;
@@ -171,15 +172,16 @@ export const AiMemoryCompliments: React.FC<AiMemoryComplimentsProps> = ({ onBurs
 
         {/* Selected Image Preview (Pristine photo, zero upload buttons) */}
         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-rose-100/60 mb-5 shadow-inner">
-          <img
+          <ProgressiveImage
             src={selectedMemory.path}
             alt={selectedMemory.name}
-            className="w-full h-full object-cover object-center transition-all duration-500"
-            referrerPolicy="no-referrer"
+            aspectRatio="aspect-[4/3]"
+            className="w-full h-full"
+            imgClassName="w-full h-full object-cover object-center transition-all duration-500"
           />
 
           {/* Photo Tag Badge */}
-          <div className="absolute bottom-3 left-3 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-[11px] font-semibold text-white shadow-md">
+          <div className="absolute bottom-3 left-3 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-[11px] font-semibold text-white shadow-md z-10 pointer-events-none">
             {selectedMemory.name}
           </div>
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, Heart, Crown } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { MediaService } from '../utils/mediaStore';
+import { ProgressiveImage } from './ProgressiveImage';
 
 interface HeroSectionProps {
   onBurstConfetti: (x?: number, y?: number) => void;
@@ -46,11 +47,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="liquid-glass relative p-2.5 sm:p-3 rounded-3xl shadow-2xl shadow-rose-950/15 border border-white/90 animate-soft-float">
           {/* Portrait Container with Ananya's Real Photo */}
           <div className="relative w-64 h-80 sm:w-72 sm:h-92 rounded-2xl overflow-hidden bg-gradient-to-br from-rose-100/90 via-pink-50 to-amber-50 shadow-inner flex items-center justify-center">
-            <img
+            <ProgressiveImage
               src={photoUrl || '/ananya_real_1.jpg'}
               alt="Ananya celebrating her birthday"
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              referrerPolicy="no-referrer"
+              priority={true}
+              aspectRatio="aspect-[4/5]"
+              className="w-full h-full"
+              imgClassName="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
 
             {/* Specular Glare across image */}
@@ -64,7 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             )}
 
             {/* Subtle bottom badge inside frame */}
-            <div className="absolute bottom-3 left-3 right-3 py-1.5 px-3 rounded-xl bg-white/85 backdrop-blur-md border border-white/70 shadow-sm flex items-center justify-between">
+            <div className="absolute bottom-3 left-3 right-3 py-1.5 px-3 rounded-xl bg-white/85 backdrop-blur-md border border-white/70 shadow-sm flex items-center justify-between z-10 pointer-events-none">
               <span className="text-[11px] font-semibold text-rose-950 flex items-center gap-1.5">
                 <Crown className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
                 <span>Birthday Girl • Ananya</span>
