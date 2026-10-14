@@ -2,19 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Heart, Sparkles, Feather } from 'lucide-react';
 import { sound } from '../utils/audio';
 
-const FULL_LETTER_TEXT = `Dear Ananya,
+const FULL_LETTER_TEXT = `Happy Birthday to the sweetest part of my life! 🎂❤️🫶🏻
 
-Today is your day, and I just wanted to remind you how special you are.
+Hhaaaa! ❤️ Ye actually handwritten hone wala tha par kuch reasons ki waja se nahi ho paya Aur hai maine aaj se pehle kisi ko aise gift nahi diya hai to mujhe honestly koi idea nahi hai ki ye sab kaise likhte hain Agar kuch galat ho jaaye toh maaf kar dena okay? Hahaaa! 🫠💗 Chalo start karte hain...
 
-I hope this year brings you countless reasons to smile, beautiful memories you never want to forget, and people who always make you feel appreciated.
+Haaa! To 😮💨 tumhe to pata hi hai ki tum meri 2nd priority ho aur main tum par kitna trust karta hu Par kuch bate aisi hoti hai jo mein tum se bol nhi paya kabhi to isliye socha aaj likh hi deta hu...
 
-Keep being the wonderful person you are.
-
-Happy Birthday, Ananya.
-
-May your 15th October be as beautiful as you deserve.
-
-— From someone who made this little world just for you ✨`;
+Pata hai jab Sneh se meri ladai hui thi to uske bad Maine tumhe samjhane ki koshish bhi ki thi. par Us din jis tarah se tumne mujhse baat ki thi mujhe genuinely bahut bura laga tha  us moment par mereko bhut hurt hua tha kyunki maine kabhi expect nahi kiya tha ki aisa kuch ho sakta hai..Us din mujhe realise hua ki jab ham kisi ko apna maante hain to usse judi chhoti chhoti bate bhi hame kitna hurt kar sakti hai . Aur ha main tumhe ye sab isliye nahi bata raha hu ki tumhe bura lage ya tum khud ko blame karo. Tumhari jagah meri life mein aaj bhi wahi hai jo pehle thi samajhe cutie pie 🥰Aur pata hai tumhari ek baat mujhe genuinely bahut achhi lagti hai ki jab se ham dost bane hai tab se lekar aaj tak humare beech kitni hi ladai hui hai kitni misunderstandings hui hai kitni baar things complicated hui hain... par tumne aaj tak mujhe ye nahi kaha ki "tu mujhse baat mat kar"
+Aur sorry na jo bhi hua aur mujhe tum se bhot sari baat karni hai online kyuki offline to aur bhi log sunte hai isiliye online baat karni hai agar kar pao to agar nhi karna baat to koi baat nhi it's your choice mein tumhe kabhi bhi force nhi Karna chata na hi hurt. mein to bass tumhe khosh dekhna chata huu ab chaiye mere sath ya fir kisi aur ke sath vo matter nhi Karta par kabhi bhi kisi bhi chiz ki tension mat Lena mein hamesha tumhare sath huu tum mujhe Bata Sakti ho no matter ki kis chiz se related hai mein hamesha tumhare support mein huu ab chaiye tum opposite side mein hi kyu na ho ...And lastly I'm sorry for everything that happened between us Agar meri kisi baat se tumhe hurt hua ho to genuinely sorry.
+Once again HAPPY BIRTHDAY CUTIE PIEEEE! 🥳🎂💗`;
 
 interface BirthdayLetterProps {
   onBurstConfetti: (x?: number, y?: number) => void;
@@ -52,16 +48,16 @@ export const BirthdayLetter: React.FC<BirthdayLetterProps> = ({ onBurstConfetti 
     }
 
     const timer = setTimeout(() => {
-      // Advance by 2-3 characters for natural, brisk reveal
-      const step = Math.min(3, FULL_LETTER_TEXT.length - displayedLength);
+      // Natural typewriter pace for longer emotional letter
+      const step = Math.min(5, FULL_LETTER_TEXT.length - displayedLength);
       setDisplayedLength((prev) => prev + step);
-    }, 28);
+    }, 20);
 
     return () => clearTimeout(timer);
   }, [isTyping, displayedLength]);
 
   return (
-    <section className="py-14 px-4 max-w-lg mx-auto">
+    <section className="py-14 px-4 max-w-2xl mx-auto">
       {/* Header */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-pill mb-2">
