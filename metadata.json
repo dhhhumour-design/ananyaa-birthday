@@ -1,0 +1,6 @@
+{
+  "name": "Ananya's 15 October Birthday Celebration",
+  "description": "A magical, liquid-glass mobile-first birthday experience created specifically for Ananya.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
